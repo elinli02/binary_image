@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+using namespace std;
 class BinaryImage
 {
 private:
@@ -9,5 +11,10 @@ public:
 	bool operator()(int i, int j); //чтение
 	void operator()(int i, int j, bool value); //запись
 	BinaryImage& operator *(BinaryImage second);
+	friend BinaryImage& operator +(const BinaryImage& start, const bool value);
+	friend BinaryImage& operator +(const bool value, const BinaryImage& start);
+	friend ostream& operator<<(ostream& os, const BinaryImage& image);
+	void operator !();
+	double coefficient();
 };
 
