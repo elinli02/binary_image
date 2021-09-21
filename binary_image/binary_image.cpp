@@ -1,5 +1,11 @@
 #include "binary_image.h"
 
+BinaryImage::BinaryImage()
+{
+	M = 0;
+	N = 0;
+}
+
 BinaryImage::BinaryImage(int M, int N)
 {
 	this->M = M;
@@ -10,6 +16,7 @@ BinaryImage::BinaryImage(int M, int N)
 		array[i] = new bool[N];
 	}
 }
+
 
 bool BinaryImage::operator()(int i, int j)
 {
@@ -23,7 +30,7 @@ void BinaryImage::operator()(int i, int j, bool value)
 
 BinaryImage& BinaryImage::operator*(BinaryImage second)
 {
-	int Mresult, Nresult;
+	int Mresult, Nresult; //max
 	int Mmin, Nmin;
 	if (this->M > second.M)
 	{
@@ -72,8 +79,121 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 			}
 		}
 	}
+	else if (this->N < second.N)
+	{
+		for (int i = 0; i < second.M; i++)
+		{
+			for (int j = Nmin; j < Nresult; j++)
+			{
+				result_image(i, j, second.array[i][j]);
+			}
+		}
+	}
+	if (this->M > second.M)
+	{
+		for (int i = 0; i < this->N; i++)
+		{
+			for (int j = Mmin; j < Mresult; j++)
+			{
+				result_image(j, i, this->array[j][i]);
+			}
+		}
+	}
+	else if (this->M < second.M)
+	{
+		for (int i = 0; i < second.N; i++)
+		{
+			for (int j = Mmin; j < Mresult; j++)
+			{
+				result_image(j, i, second.array[j][i]);
+			}
+		}
+	}
 	return result_image;
 }
+BinaryImage& BinaryImage::operator+(BinaryImage second)
+{
+	int Nmax, Mmax;
+	int Nmin, Mmin;
+	if (this->M > second.M)
+	{
+		Mmax = this->M;
+		Mmin = second.M;
+	}
+	else
+	{
+		Mmax = second.M;
+		Mmin = this->M;
+	}
+	if (this->N > second.N)
+	{
+		Nmax = this->N;
+		Nmin = second.N;
+	}
+	else
+	{
+		Nmax = second.N;
+		Nmin = this->N;
+	}
+	BinaryImage result_image(Mmax, Nmax);
+	bool value;
+	for(int i=0; i<Mmin; i++)
+	{
+		for(int j=0; j<Nmin; j++)
+		{
+			if(array[i][j]==false && second.array[i][j]==false)
+			{
+				value = false;
+			}
+			else
+			{
+				value = true;
+			}
+			result_image(i, j, value);
+		}
+	}
+	if (this->N > second.N)
+	{
+		for (int i = 0; i < this->M; i++)
+		{
+			for (int j = Nmin; j < Nmax; j++)
+			{
+				result_image(i, j, this->array[i][j]);
+			}
+		}
+	}
+	else if (this->N < second.N)
+	{
+		for (int i = 0; i < second.M; i++)
+		{
+			for (int j = Nmin; j < Nmax; j++)
+			{
+				result_image(i, j, second.array[i][j]);
+			}
+		}
+	}
+	else if (this->M > second.M)
+	{
+		for (int i = 0; i < this->N; i++)
+		{
+			for (int j = Mmin; j < Mmax; j++)
+			{
+				result_image(i, j, this->array[i][j]);
+			}
+		}
+	}
+	else if (this->M < second.M)
+	{
+		for (int i = 0; i < second.N; i++)
+		{
+			for (int j = Mmin; j < Mmax; j++)
+			{
+				result_image(i, j, second.array[i][j]);
+			}
+		}
+	}
+	return result_image;
+} 
 
 void BinaryImage::operator!()
 {
@@ -106,7 +226,7 @@ double BinaryImage::coefficient()
 BinaryImage& operator+(const BinaryImage& start, const bool value)
 {
 	BinaryImage resultImage(start.M, start.N);
-	if (value)
+	if (value) //вся матрица будет true
 	{
 		for (int i = 0; i < start.M; i++)
 		{
@@ -116,7 +236,7 @@ BinaryImage& operator+(const BinaryImage& start, const bool value)
 			}
 		}
 	}
-	else
+	else //ничего не изменится
 	{
 		for (int i = 0; i < start.M; i++)
 		{
@@ -131,7 +251,7 @@ BinaryImage& operator+(const BinaryImage& start, const bool value)
 
 BinaryImage& operator+(const bool value, const BinaryImage& start)
 {
-	BinaryImage result = start + value;
+	BinaryImage result = start + value; //используем оператор выше
 	return result;
 }
 
