@@ -15,6 +15,8 @@ public:
 	BinaryImage& operator +(BinaryImage second);
 	friend BinaryImage& operator +(const BinaryImage& start, const bool value);
 	friend BinaryImage& operator +(const bool value, const BinaryImage& start);
+	friend BinaryImage& operator *(const BinaryImage& start, const bool value);
+	friend BinaryImage& operator *(const bool value, const BinaryImage& start);
 	//умножение на bool
 	friend ostream& operator<<(ostream& os, const BinaryImage& image); //поток вывода
 	void operator !();

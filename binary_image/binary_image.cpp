@@ -255,6 +255,38 @@ BinaryImage& operator+(const bool value, const BinaryImage& start)
 	return result;
 }
 
+BinaryImage& operator*(const BinaryImage& start, const bool value)
+{
+	BinaryImage resultImage(start.M, start.N);
+	if (value==0)
+	{
+		for (int i = 0; i < start.M; i++)
+		{
+			for (int j = 0; j < start.N; j++)
+			{
+				resultImage.array[i][j] = false;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < start.M; i++)
+		{
+			for (int j = 0; j < start.N; j++)
+			{
+				resultImage.array[i][j] = true;
+			}
+		}
+	}
+	return resultImage;
+}
+
+BinaryImage& operator*(const bool value, const BinaryImage& start)
+{
+	BinaryImage result = start * value;
+	return result;
+}
+
 ostream& operator<<(ostream& os, const BinaryImage& image)
 {
 	for (int i = 0; i < image.M; i++)
