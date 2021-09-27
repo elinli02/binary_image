@@ -4,7 +4,7 @@ BinaryImage::BinaryImage()
 {
 	M = 0;
 	N = 0;
-}
+} 
 
 BinaryImage::BinaryImage(int M, int N)
 {
@@ -258,7 +258,7 @@ BinaryImage& operator+(const bool value, const BinaryImage& start)
 BinaryImage& operator*(const BinaryImage& start, const bool value)
 {
 	BinaryImage resultImage(start.M, start.N);
-	if (value==0)
+	if (!value)
 	{
 		for (int i = 0; i < start.M; i++)
 		{
@@ -274,7 +274,7 @@ BinaryImage& operator*(const BinaryImage& start, const bool value)
 		{
 			for (int j = 0; j < start.N; j++)
 			{
-				resultImage.array[i][j] = true;
+				resultImage.array[i][j] = start.array[i][j];
 			}
 		}
 	}

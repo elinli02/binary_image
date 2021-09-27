@@ -67,7 +67,28 @@ int main()
 			}
 			break;
 		case 4:
-
+			if (binaryImage1 != NULL && binaryImage2 != NULL)
+			{
+				do
+				{
+					cout << "Select picture: " << endl;
+					cout << "For picture 1 - press 1" << endl;
+					cout << "For picture 2 - press 2" << endl;
+					cout << "Your choice: ";
+					cin >> choice;
+				} while (choice > 2 || choice < 0);
+				cout << "Enter value: ";
+				cin >> value;
+				if (choice == 1)
+				{
+					binaryImageRes = (*binaryImage1) + value;
+				}
+				else
+				{
+					binaryImageRes = (*binaryImage2) + value;
+				}
+				cout << binaryImageRes;
+			}
 			break;
 		case 5:
 			do
@@ -81,12 +102,12 @@ int main()
 			if (choice == 1)
 			{
 				!(*binaryImage1);
-				cout << *binaryImage1;
+				cout << (*binaryImage1);
 			}
 			else
 			{
 				!(*binaryImage2);
-				cout << *binaryImage2;
+				cout << (*binaryImage2);
 			}
 			//!(*binaryImage1);
 			//cout << *binaryImage1;
@@ -113,10 +134,10 @@ int main()
 			if (binaryImage1 != NULL && binaryImage2!=NULL)
 			{
 				cout << "Image 1:" << endl;
-				cout << *binaryImage1; 
+				cout << (*binaryImage1); 
 				cout << endl;
 				cout << "Image 2:" << endl;
-				cout << *binaryImage2;
+				cout << (*binaryImage2);
 			}
 			else
 			{
