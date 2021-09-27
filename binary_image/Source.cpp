@@ -8,6 +8,7 @@ int main()
 	int choice_menu;
 	int choice;
 	bool value;
+	int row, col;
 	BinaryImage* binaryImage1=NULL;
 	BinaryImage* binaryImage2 = NULL;
 	BinaryImage binaryImageRes;
@@ -24,6 +25,7 @@ int main()
 		cout << "6. Image occupancy factor" << endl;
 		cout << "7. Image output" << endl;
 		cout << "8. Complete the work" << endl; 
+		cout << "9. Change image" << endl;
 		cout << "Your choice: ";
 		cin >> choice_menu;
 		switch (choice_menu)
@@ -145,6 +147,21 @@ int main()
 			}
 			break;
 		case 8:
+			break;
+		case 9:
+			if (binaryImage1 != NULL)
+			{
+				cout << "Number row: ";
+				cin >> row;
+				cout << "Number col: ";
+				cin >> col;
+				if (binaryImage1->checker_index(row - 1, col - 1))
+				{
+					cout << "Enter value: ";
+					cin >> value;
+					(*binaryImage1)(row - 1, col - 1, value);
+				}
+			}
 			break;
 		}
 	} while (choice_menu != 8); 

@@ -20,5 +20,6 @@ public:
 	friend ostream& operator<<(ostream& os, const BinaryImage& image); //поток вывода
 	void operator !();
 	double coefficient();
+	bool checker_index(int row, int col);
 };
 

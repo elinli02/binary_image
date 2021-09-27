@@ -223,6 +223,11 @@ double BinaryImage::coefficient()
 	return (double)countElementsTrue/countElements;
 }
 
+bool BinaryImage::checker_index(int row, int col)
+{
+	return row < M&& col < N;
+}
+
 BinaryImage& operator+(const BinaryImage& start, const bool value)
 {
 	BinaryImage resultImage(start.M, start.N);
