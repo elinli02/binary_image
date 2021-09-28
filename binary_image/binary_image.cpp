@@ -17,7 +17,6 @@ BinaryImage::BinaryImage(int M, int N)
 	}
 }
 
-
 bool BinaryImage::operator()(int i, int j)
 {
 	return array[i][j];

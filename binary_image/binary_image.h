@@ -17,7 +17,7 @@ public:
 	friend BinaryImage& operator +(const bool value, const BinaryImage& start);
 	friend BinaryImage& operator *(const BinaryImage& start, const bool value);
 	friend BinaryImage& operator *(const bool value, const BinaryImage& start);
-	friend ostream& operator<<(ostream& os, const BinaryImage& image); //поток вывода
+	friend ostream& operator<<(ostream& os, const BinaryImage& image); 
 	void operator !();
 	double coefficient();
 	bool checker_index(int row, int col);

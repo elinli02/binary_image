@@ -17,6 +17,7 @@ int main()
 	do
 	{
 		cout << endl;
+		cout << "0. Change image" << endl;
 		cout << "1. Multiplication of two binary image" << endl;
 		cout << "2. Addition of two binary image" << endl;
 		cout << "3. Multiplication binary image with bool " << endl;
@@ -25,11 +26,25 @@ int main()
 		cout << "6. Image occupancy factor" << endl;
 		cout << "7. Image output" << endl;
 		cout << "8. Complete the work" << endl; 
-		cout << "9. Change image" << endl;
 		cout << "Your choice: ";
 		cin >> choice_menu;
 		switch (choice_menu)
 		{
+		case 0:
+			if (binaryImage1 != NULL)
+			{
+				cout << "Number row: ";
+				cin >> row;
+				cout << "Number col: ";
+				cin >> col;
+				if (binaryImage1->checker_index(row - 1, col - 1))
+				{
+					cout << "Enter value: ";
+					cin >> value;
+					(*binaryImage1)(row - 1, col - 1, value);
+				}
+			}
+			break;
 		case 1:
 			if (binaryImage1 != NULL && binaryImage2 != NULL)
 			{
@@ -147,21 +162,6 @@ int main()
 			}
 			break;
 		case 8:
-			break;
-		case 9:
-			if (binaryImage1 != NULL)
-			{
-				cout << "Number row: ";
-				cin >> row;
-				cout << "Number col: ";
-				cin >> col;
-				if (binaryImage1->checker_index(row - 1, col - 1))
-				{
-					cout << "Enter value: ";
-					cin >> value;
-					(*binaryImage1)(row - 1, col - 1, value);
-				}
-			}
 			break;
 		}
 	} while (choice_menu != 8); 
