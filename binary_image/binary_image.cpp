@@ -4,30 +4,79 @@ BinaryImage::BinaryImage()
 {
 	M = 0;
 	N = 0;
+
 } 
 
 BinaryImage::BinaryImage(int M, int N)
 {
+	if(M<=0 || N<=0)
+	{
+		throw"Количество строчек и столбцов должно быть >0";
+	}
 	this->M = M;
 	this->N = N;
 	array = new bool*[M];
 	for (int i = 0; i < M; i++)
 	{
-		array[i] = new bool[N];
+		for (int j = 0; j < N; j++)
+		{
+			array[i] = new bool[N];
+		}
 	}
 }
-
-bool BinaryImage::operator()(int i, int j)
+const bool& BinaryImage::operator()(int i, int j) const
 {
 	return array[i][j];
 }
 
-void BinaryImage::operator()(int i, int j, bool value)
+bool& BinaryImage::operator()(int i, int j)
 {
-	array[i][j] = value;
+	//array[i][j] = value;
+	if (i >= M || j >= N || i < 0 || j < 0)
+	{
+		throw"Вышли за границы";
+	}
+	return array[i][j];
+} 
+//b(i,j) = value;
+
+BinaryImage::BinaryImage(const BinaryImage& copy)
+{
+	M = copy.M;
+	N = copy.N;
+	array = new bool*[M];
+	for (int i = 0; i < M; i++)
+	{
+		array[i] = new bool[N];
+		for (int j = 0; j < N; j++)
+		{
+			array[i][j] = copy.array[i][j];
+		}
+	}
 }
 
-BinaryImage& BinaryImage::operator*(BinaryImage second)
+BinaryImage& BinaryImage::operator=(const BinaryImage &binaryimage)
+{
+	M = binaryimage.M;
+	N = binaryimage.N;
+	array = new bool* [M];
+	for (int i = 0; i < M; i++)
+	{
+		array[i] = new bool[N];
+		for (int j = 0; j < N; j++)
+		{
+			array[i][j] = binaryimage.array[i][j];
+		}
+	}
+	return *this;
+}
+
+/*void BinaryImage::operator()(int i, int j, bool value)
+{
+	array[i][j] = value;
+} */
+
+BinaryImage BinaryImage::operator*(BinaryImage second)
 {
 	int Mresult, Nresult; //max
 	int Mmin, Nmin;
@@ -65,7 +114,7 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 			{
 				value = false;
 			}
-			result_image(i, j, value);
+			result_image(i, j) = value;
 		}
 	}
 	if (this->N > second.N) //если первая матрица шире второй 
@@ -74,7 +123,7 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 		{
 			for (int j = Nmin; j < Nresult; j++) //толькр столбики, которые не пересекаются
 			{
-				result_image(i, j, this->array[i][j]);
+				result_image(i, j)= this->array[i][j];
 			}
 		}
 	}
@@ -84,7 +133,7 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 		{
 			for (int j = Nmin; j < Nresult; j++)
 			{
-				result_image(i, j, second.array[i][j]);
+				result_image(i, j)= second.array[i][j];
 			}
 		}
 	}
@@ -94,7 +143,7 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 		{
 			for (int j = Mmin; j < Mresult; j++)
 			{
-				result_image(j, i, this->array[j][i]);
+				result_image(j, i)= this->array[j][i];
 			}
 		}
 	}
@@ -104,13 +153,13 @@ BinaryImage& BinaryImage::operator*(BinaryImage second)
 		{
 			for (int j = Mmin; j < Mresult; j++)
 			{
-				result_image(j, i, second.array[j][i]);
+				result_image(j, i)= second.array[j][i];
 			}
 		}
 	}
 	return result_image;
 }
-BinaryImage& BinaryImage::operator+(BinaryImage second)
+BinaryImage BinaryImage::operator+(BinaryImage second)
 {
 	int Nmax, Mmax;
 	int Nmin, Mmin;
@@ -148,7 +197,7 @@ BinaryImage& BinaryImage::operator+(BinaryImage second)
 			{
 				value = true;
 			}
-			result_image(i, j, value);
+			result_image(i, j)= value;
 		}
 	}
 	if (this->N > second.N)
@@ -157,7 +206,7 @@ BinaryImage& BinaryImage::operator+(BinaryImage second)
 		{
 			for (int j = Nmin; j < Nmax; j++)
 			{
-				result_image(i, j, this->array[i][j]);
+				result_image(i, j)= this->array[i][j];
 			}
 		}
 	}
@@ -167,7 +216,7 @@ BinaryImage& BinaryImage::operator+(BinaryImage second)
 		{
 			for (int j = Nmin; j < Nmax; j++)
 			{
-				result_image(i, j, second.array[i][j]);
+				result_image(i, j)= second.array[i][j];
 			}
 		}
 	}
@@ -177,7 +226,7 @@ BinaryImage& BinaryImage::operator+(BinaryImage second)
 		{
 			for (int j = Mmin; j < Mmax; j++)
 			{
-				result_image(i, j, this->array[i][j]);
+				result_image(i, j)= this->array[i][j];
 			}
 		}
 	}
@@ -187,7 +236,7 @@ BinaryImage& BinaryImage::operator+(BinaryImage second)
 		{
 			for (int j = Mmin; j < Mmax; j++)
 			{
-				result_image(i, j, second.array[i][j]);
+				result_image(i, j)= second.array[i][j];
 			}
 		}
 	}
@@ -224,10 +273,15 @@ double BinaryImage::coefficient()
 
 bool BinaryImage::checker_index(int row, int col)
 {
-	return row < M&& col < N;
+	return row < M && col < N;
 }
 
-BinaryImage& operator+(const BinaryImage& start, const bool value)
+BinaryImage::~BinaryImage()
+{
+	delete[] array;
+}
+
+BinaryImage operator+(const BinaryImage& start, const bool value)
 {
 	BinaryImage resultImage(start.M, start.N);
 	if (value) //вся матрица будет true
@@ -253,13 +307,13 @@ BinaryImage& operator+(const BinaryImage& start, const bool value)
 	return resultImage;
 }
 
-BinaryImage& operator+(const bool value, const BinaryImage& start)
+BinaryImage operator+(const bool value, const BinaryImage& start)
 {
 	BinaryImage result = start + value; //используем оператор выше
 	return result;
 }
 
-BinaryImage& operator*(const BinaryImage& start, const bool value)
+BinaryImage operator*(const BinaryImage& start, const bool value)
 {
 	BinaryImage resultImage(start.M, start.N);
 	if (!value)
@@ -285,12 +339,12 @@ BinaryImage& operator*(const BinaryImage& start, const bool value)
 	return resultImage;
 }
 
-BinaryImage& operator*(const bool value, const BinaryImage& start)
+BinaryImage operator*(const bool value, const BinaryImage& start)
 {
 	BinaryImage result = start * value;
 	return result;
 }
-
+ 
 ostream& operator<<(ostream& os, const BinaryImage& image)
 {
 	for (int i = 0; i < image.M; i++)
@@ -309,4 +363,23 @@ ostream& operator<<(ostream& os, const BinaryImage& image)
 		os << endl;
 	}
 	return os;
+}
+
+bool operator==(const BinaryImage& first, const BinaryImage& second)
+{
+	if (first.M != second.M || first.N != second.N)
+	{
+		return false;
+	}
+	for (int i = 0; i < first.M; i++)
+	{
+		for (int j = 0; j < first.N; j++)
+		{
+			if (first.array[i][j] != second.array[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }

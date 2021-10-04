@@ -1,10 +1,2 @@
-﻿  binary_image.cpp
-  Source.cpp
-  Создание кода...
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(111): warning C4172: возвращение адреса локальной или временной переменной : result_image
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(194): warning C4172: возвращение адреса локальной или временной переменной : result_image
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(253): warning C4172: возвращение адреса локальной или временной переменной : resultImage
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(259): warning C4172: возвращение адреса локальной или временной переменной : result
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(285): warning C4172: возвращение адреса локальной или временной переменной : resultImage
-C:\Users\khade\source\repos\binary_image\binary_image\binary_image.cpp(291): warning C4172: возвращение адреса локальной или временной переменной : result
+﻿  Source.cpp
   binary_image.vcxproj -> C:\Users\khade\source\repos\binary_image\x64\Debug\binary_image.exe
