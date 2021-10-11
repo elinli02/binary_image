@@ -12,7 +12,8 @@ int main()
 		bool value;
 		int row, col;
 		BinaryImage binaryImage1(createImage()); //с использованием конструктора копирования
-		BinaryImage binaryImage2(createImage());
+		BinaryImage binaryImage2(createImage()); 
+
 		do
 		{
 			cout << endl;
