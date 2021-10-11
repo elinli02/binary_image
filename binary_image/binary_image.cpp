@@ -4,7 +4,7 @@ BinaryImage::BinaryImage()
 {
 	M = 0;
 	N = 0;
-
+	array = NULL;
 } 
 
 BinaryImage::BinaryImage(int M, int N)
@@ -71,10 +71,6 @@ BinaryImage& BinaryImage::operator=(const BinaryImage &binaryimage)
 	return *this;
 }
 
-/*void BinaryImage::operator()(int i, int j, bool value)
-{
-	array[i][j] = value;
-} */
 
 BinaryImage BinaryImage::operator*(BinaryImage second)
 {
@@ -276,8 +272,13 @@ bool BinaryImage::checker_index(int row, int col)
 	return row < M && col < N;
 }
 
+
 BinaryImage::~BinaryImage()
 {
+	for(int i=0; i<M; i++)
+	{
+		delete[] array[i];
+	}
 	delete[] array;
 }
 
@@ -365,7 +366,7 @@ ostream& operator<<(ostream& os, const BinaryImage& image)
 	return os;
 }
 
-bool operator==(const BinaryImage& first, const BinaryImage& second)
+bool operator==(const BinaryImage& first, const BinaryImage& second) // (const BinaryImage &rhs) текущая и правая
 {
 	if (first.M != second.M || first.N != second.N)
 	{
@@ -376,6 +377,90 @@ bool operator==(const BinaryImage& first, const BinaryImage& second)
 		for (int j = 0; j < first.N; j++)
 		{
 			if (first.array[i][j] != second.array[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+bool BinaryImage::operator!=(const BinaryImage& rhs)
+{
+	if (M != rhs.M || N != rhs.N || array != rhs.array)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool BinaryImage::operator>=(const BinaryImage& rhs)
+{
+	if (M != rhs.M || N != rhs.N)
+	{
+		throw("Different size");
+	}
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (array[i][j] < rhs.array[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool BinaryImage::operator<=(const BinaryImage& rhs)
+{
+	if (M != rhs.M || N != rhs.N)
+	{
+		throw("Different size");
+	}
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (array[i][j] > rhs.array[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool BinaryImage::operator>(const BinaryImage& rhs)
+{
+	if (M != rhs.M || N != rhs.N)
+	{
+		throw("Different size");
+	}
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (array[i][j] <= rhs.array[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool BinaryImage::operator<(const BinaryImage& rhs)
+{
+	if (M != rhs.M || N != rhs.N)
+	{
+		throw("Different size");
+	}
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (array[i][j] >= rhs.array[i][j])
 			{
 				return false;
 			}
