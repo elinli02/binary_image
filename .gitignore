@@ -1,3 +1,5 @@
 .vs/
 Debug/
 x64/
+binary_image/Debug/
+binary_image/x64/
