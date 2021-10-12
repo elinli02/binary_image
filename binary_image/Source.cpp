@@ -11,7 +11,7 @@ int main()
 		int choice;
 		bool value;
 		int row, col;
-		BinaryImage binaryImage1(createImage()); //с использованием конструктора копирования
+		BinaryImage binaryImage1(createImage()); 
 		BinaryImage binaryImage2(createImage()); 
 
 		do
@@ -49,16 +49,16 @@ int main()
 				{
 					if (binaryImage1.checker_index(row - 1, col - 1))
 					{
-						cout << "Enter value: ";
+						cout << "Enter value (0 or 1): ";
 						cin >> value;
-						binaryImage1(row - 1, col - 1) = value; //оператор круглых скобок
+						binaryImage1(row - 1, col - 1) = value; 
 					}
 				}
 				else
 				{
 					if (binaryImage2.checker_index(row - 1, col - 1))
 					{
-						cout << "Enter value: ";
+						cout << "Enter value (0 or 1): ";
 						cin >> value;
 						binaryImage2(row - 1, col - 1) = value;
 					}
@@ -67,16 +67,12 @@ int main()
 			break;
 			case 1:
 			{
-				//BinaryImage binaryImageRes1(binaryImage1 * binaryImage2);
-				//cout << binaryImageRes1;
-				cout << binaryImage1 * binaryImage2; //копирования, перемножения, вывод
+				cout << binaryImage1 * binaryImage2; 
 			}
 			break;
 			case 2:
 			{
-				BinaryImage binaryImageRes2(binaryImage1 + binaryImage2);
-				//binaryImageRes = binaryImage1 + binaryImage2;
-				cout << binaryImageRes2; //второй способ через посредственную переменную
+				cout << binaryImage1 + binaryImage2;
 			}
 			break;
 			case 3:
@@ -89,17 +85,15 @@ int main()
 					cout << "Your choice: ";
 					cin >> choice;
 				} while (choice > 2 || choice < 0);
-				cout << "Enter value: ";
+				cout << "Enter value (0 or 1): ";
 				cin >> value;
 				if (choice == 1)
 				{
-					BinaryImage binaryImageRes3 = (binaryImage1 * value); //перемножения, присвоения
-					cout << binaryImageRes3;
+					cout << binaryImage1 * value;
 				}
 				else
 				{
-					BinaryImage binaryImageRes4(binaryImage2 * value);
-					cout << binaryImageRes4;
+					cout << binaryImage2 * value;
 				}
 			}
 			break;
@@ -113,19 +107,15 @@ int main()
 					cout << "Your choice: ";
 					cin >> choice;
 				} while (choice > 2 || choice < 0);
-				cout << "Enter value: ";
+				cout << "Enter value (0 or 1): ";
 				cin >> value;
 				if (choice == 1)
 				{
-					BinaryImage binaryImageRes5(binaryImage1 + value);
-					binaryImageRes5 = binaryImage1 + value;
-					cout << binaryImageRes5;
+					cout << binaryImage1 + value;
 				}
 				else
 				{
-					BinaryImage binaryImageRes6(binaryImage1 + value);
-					binaryImageRes6 = binaryImage1 + value;
-					cout << binaryImageRes6;
+					cout << binaryImage2 + value;
 				}
 			}
 			break;
@@ -182,7 +172,10 @@ int main()
 			break;
 			case 8:
 			{
-				cout << (binaryImage1 == binaryImage2);
+				cout << "0 - Images are different" << endl;
+				cout << "1 - Images are equal" << endl;
+				cout << "Result: ";
+				cout << (binaryImage1 == binaryImage2)<<endl;
 			}
 			case 9:
 				break;
@@ -204,27 +197,3 @@ BinaryImage createImage()
 	BinaryImage temp(rows, cols);
 	return temp;
 }
-
-/*BinaryImage first(3, 4);
-		BinaryImage second(2, 5);
-		cout << first;
-		cout << endl;
-		cout << second;
-		cout << endl;
-		second(0, 0, false);
-		cout << second;
-		cout << endl;
-		//second(1, 1, false);
-		BinaryImage third = first * second;
-		cout << third;
-		cout << endl;
-		BinaryImage four = first + second;
-		cout << four;
-		cout << endl;
-		!second;
-		cout << second;
-		BinaryImage fourth = second + true;
-		double res_coef = second.coefficient(); double res=b->coef
-		cout << res_coef; */
-		//сами объекты на стеке, сами данные в динамике
-		//конструктор копирования(?), деструктор 

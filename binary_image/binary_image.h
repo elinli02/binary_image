@@ -15,7 +15,7 @@ public:
 	BinaryImage& operator=(const BinaryImage &binaryimage);
 	BinaryImage operator *(BinaryImage second);
 	BinaryImage operator +(BinaryImage second);
-	friend BinaryImage operator +(const BinaryImage& start, const bool value); //
+	friend BinaryImage operator +(const BinaryImage& start, const bool value); 
 	friend BinaryImage operator +(const bool value, const BinaryImage& start);
 	friend BinaryImage operator *(const BinaryImage& start, const bool value);
 	friend BinaryImage operator *(const bool value, const BinaryImage& start);
@@ -23,12 +23,7 @@ public:
 	void operator !();
 	double coefficient();
 	bool checker_index(int row, int col);
-	friend bool operator==(const BinaryImage& first, const BinaryImage& second); //friend è rhs ?
-	bool operator!=(const BinaryImage& rhs);
-	bool operator>=(const BinaryImage& rhs);
-	bool operator<=(const BinaryImage& rhs);
-	bool operator>(const BinaryImage& rhs);
-	bool operator<(const BinaryImage& rhs);
+	friend bool operator==(const BinaryImage& first, const BinaryImage& second); 
 	~BinaryImage();
 };
 
