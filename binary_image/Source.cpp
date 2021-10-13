@@ -47,21 +47,15 @@ int main()
 				cin >> col;
 				if (choice == 1)
 				{
-					if (binaryImage1.checker_index(row - 1, col - 1))
-					{
-						cout << "Enter value (0 or 1): ";
-						cin >> value;
-						binaryImage1(row - 1, col - 1) = value; 
-					}
+					cout << "Enter value (0 or 1): ";
+					cin >> value;
+					binaryImage1(row - 1, col - 1) = value; 
 				}
 				else
 				{
-					if (binaryImage2.checker_index(row - 1, col - 1))
-					{
-						cout << "Enter value (0 or 1): ";
-						cin >> value;
-						binaryImage2(row - 1, col - 1) = value;
-					}
+					cout << "Enter value (0 or 1): ";
+					cin >> value;
+					binaryImage2(row - 1, col - 1) = value;
 				}
 			}
 			break;
@@ -131,13 +125,11 @@ int main()
 				} while (choice > 2 || choice < 0);
 				if (choice == 1)
 				{
-					!binaryImage1;
-					cout << binaryImage1;
+					cout << !binaryImage1;
 				}
 				else
 				{
-					!binaryImage2;
-					cout << binaryImage2;
+					cout << !binaryImage2;
 				}
 			}
 			break;

@@ -11,7 +11,7 @@ BinaryImage::BinaryImage(int M, int N)
 {
 	if(M<=0 || N<=0)
 	{
-		throw"Количество строчек и столбцов должно быть >0";
+		throw"The number of rows and columns should be >0";
 	}
 	this->M = M;
 	this->N = N;
@@ -33,7 +33,7 @@ bool& BinaryImage::operator()(int i, int j)
 {
 	if (i >= M || j >= N || i < 0 || j < 0)
 	{
-		throw"Вышли за границы";
+		throw"Values abroad";
 	}
 	return array[i][j];
 } 
@@ -53,24 +53,34 @@ BinaryImage::BinaryImage(const BinaryImage& copy)
 	}
 }
 
-BinaryImage& BinaryImage::operator=(const BinaryImage &binaryimage)
+int BinaryImage::get_M() const
 {
-	M = binaryimage.M;
-	N = binaryimage.N;
-	array = new bool* [M];
-	for (int i = 0; i < M; i++)
-	{
-		array[i] = new bool[N];
-		for (int j = 0; j < N; j++)
-		{
-			array[i][j] = binaryimage.array[i][j];
-		}
-	}
-	return *this;
+	return M;
 }
 
+int BinaryImage::get_N() const
+{
+	return N;
+}
 
-BinaryImage BinaryImage::operator*(BinaryImage second)
+BinaryImage& BinaryImage::operator=(const BinaryImage &binaryimage)
+{
+	if (this == &binaryimage)
+	{
+		return *this;
+	}
+	M = binaryimage.M;
+	N = binaryimage.N;
+
+	return *this;
+}
+/*void BinaryImage::operator=(const BinaryImage& binaryimage) 
+{
+	BinaryImage tmp(binaryimage);
+	swap(tmp);
+} */
+
+BinaryImage BinaryImage::operator*(const BinaryImage &second)
 {
 	int Mresult, Nresult; //max
 	int Mmin, Nmin;
@@ -153,7 +163,7 @@ BinaryImage BinaryImage::operator*(BinaryImage second)
 	}
 	return result_image;
 }
-BinaryImage BinaryImage::operator+(BinaryImage second)
+BinaryImage BinaryImage::operator+(const BinaryImage &second)
 {
 	int Nmax, Mmax;
 	int Nmin, Mmin;
@@ -235,17 +245,20 @@ BinaryImage BinaryImage::operator+(BinaryImage second)
 		}
 	}
 	return result_image;
-} 
+}
 
-void BinaryImage::operator!()
+
+BinaryImage BinaryImage::operator!()
 {
-	for (int i = 0; i < this->M; i++)
+	BinaryImage temp(M, N);
+	for (int i = 0; i < temp.M; i++)
 	{
-		for (int j = 0; j < this->N; j++)
+		for (int j = 0; j < temp.N; j++)
 		{
-			this->array[i][j] = !this->array[i][j];
+			temp.array[i][j] = !temp.array[i][j];
 		}
 	}
+	return temp;
 }
 
 double BinaryImage::coefficient()
@@ -265,11 +278,6 @@ double BinaryImage::coefficient()
 	return (double)countElementsTrue/countElements;
 }
 
-bool BinaryImage::checker_index(int row, int col)
-{
-	return row < M && col < N;
-}
-
 
 BinaryImage::~BinaryImage()
 {
@@ -280,14 +288,14 @@ BinaryImage::~BinaryImage()
 	delete[] array;
 }
 
-BinaryImage operator+(const BinaryImage& start, const bool value)
+BinaryImage BinaryImage::operator+(const bool value)
 {
-	BinaryImage resultImage(start.M, start.N);
+	BinaryImage resultImage(M, N);
 	if (value) //вся матрица будет true
 	{
-		for (int i = 0; i < start.M; i++)
+		for (int i = 0; i < M; i++)
 		{
-			for (int j = 0; j < start.N; j++)
+			for (int j = 0; j < N; j++)
 			{
 				resultImage.array[i][j] = true;
 			}
@@ -295,31 +303,27 @@ BinaryImage operator+(const BinaryImage& start, const bool value)
 	}
 	else //ничего не изменится
 	{
-		for (int i = 0; i < start.M; i++)
+		for (int i = 0; i < M; i++)
 		{
-			for (int j = 0; j < start.N; j++)
+			for (int j = 0; j < N; j++)
 			{
-				resultImage.array[i][j] = start.array[i][j];
+				resultImage.array[i][j] = array[i][j];
 			}
 		}
 	}
 	return resultImage;
 }
 
-BinaryImage operator+(const bool value, const BinaryImage& start)
-{
-	BinaryImage result = start + value; 
-	return result;
-}
 
-BinaryImage operator*(const BinaryImage& start, const bool value)
+
+BinaryImage BinaryImage::operator*(const bool value)
 {
-	BinaryImage resultImage(start.M, start.N);
+	BinaryImage resultImage(M, N);
 	if (!value)
 	{
-		for (int i = 0; i < start.M; i++)
+		for (int i = 0; i < M; i++)
 		{
-			for (int j = 0; j < start.N; j++)
+			for (int j = 0; j < N; j++)
 			{
 				resultImage.array[i][j] = false;
 			}
@@ -327,22 +331,17 @@ BinaryImage operator*(const BinaryImage& start, const bool value)
 	}
 	else
 	{
-		for (int i = 0; i < start.M; i++)
+		for (int i = 0; i < M; i++)
 		{
-			for (int j = 0; j < start.N; j++)
+			for (int j = 0; j < N; j++)
 			{
-				resultImage.array[i][j] = start.array[i][j];
+				resultImage.array[i][j] = array[i][j];
 			}
 		}
 	}
 	return resultImage;
 }
 
-BinaryImage operator*(const bool value, const BinaryImage& start)
-{
-	BinaryImage result = start * value;
-	return result;
-}
  
 ostream& operator<<(ostream& os, const BinaryImage& image)
 {
@@ -364,17 +363,17 @@ ostream& operator<<(ostream& os, const BinaryImage& image)
 	return os;
 }
 
-bool operator==(const BinaryImage& first, const BinaryImage& second) 
+bool BinaryImage::operator==(const BinaryImage& second)
 {
-	if (first.M != second.M || first.N != second.N)
+	if (M != second.M || N != second.N)
 	{
 		return false;
 	}
-	for (int i = 0; i < first.M; i++)
+	for (int i = 0; i < M; i++)
 	{
-		for (int j = 0; j < first.N; j++)
+		for (int j = 0; j < N; j++)
 		{
-			if (first.array[i][j] != second.array[i][j])
+			if (array[i][j] != second.array[i][j])
 			{
 				return false;
 			}

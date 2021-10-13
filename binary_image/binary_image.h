@@ -12,18 +12,24 @@ public:
 	bool& operator()(int i, int j);
 	const bool& operator()(int i, int j) const;
 	BinaryImage(const BinaryImage& copy);
+	int get_M() const;
+	int get_N() const;
 	BinaryImage& operator=(const BinaryImage &binaryimage);
-	BinaryImage operator *(BinaryImage second);
-	BinaryImage operator +(BinaryImage second);
-	friend BinaryImage operator +(const BinaryImage& start, const bool value); 
-	friend BinaryImage operator +(const bool value, const BinaryImage& start);
-	friend BinaryImage operator *(const BinaryImage& start, const bool value);
-	friend BinaryImage operator *(const bool value, const BinaryImage& start);
+	/*void swap(BinaryImage& binaryimage) {
+		std::swap(M, binaryimage.M);
+		std::swap(N, binaryimage.N);
+		std::swap(array, binaryimage.array);
+	}
+	void operator=(const BinaryImage& binaryimage); */
+	BinaryImage operator *(const BinaryImage &second);
+	BinaryImage operator +(const BinaryImage &second);
+	BinaryImage operator +(const bool value); 
+	BinaryImage operator *(const bool value);
 	friend ostream& operator<<(ostream& os, const BinaryImage& image); 
-	void operator !();
+	//void operator !();
+	BinaryImage operator !();
 	double coefficient();
-	bool checker_index(int row, int col);
-	friend bool operator==(const BinaryImage& first, const BinaryImage& second); 
+	bool operator==(const BinaryImage& second); 
 	~BinaryImage();
 };
 
