@@ -18,14 +18,19 @@ BinaryImage::BinaryImage(int M, int N)
 	array = new bool*[M];
 	for (int i = 0; i < M; i++)
 	{
+		array[i] = new bool[N];
 		for (int j = 0; j < N; j++)
 		{
-			array[i] = new bool[N];
+			array[i][j] = true;
 		}
 	}
 }
 const bool& BinaryImage::operator()(int i, int j) const
 {
+	if (i >= M || j >= N || i < 0 || j < 0)
+	{
+		throw"Values abroad";
+	}
 	return array[i][j];
 }
 
@@ -71,14 +76,16 @@ BinaryImage& BinaryImage::operator=(const BinaryImage &binaryimage)
 	}
 	M = binaryimage.M;
 	N = binaryimage.N;
-
+	for (int i = 0; i < M; i++)
+	{
+		array[i] = new bool[N];
+		for (int j = 0; j < N; j++)
+		{
+			array[i][j] = binaryimage.array[i][j];
+		}
+	}
 	return *this;
 }
-/*void BinaryImage::operator=(const BinaryImage& binaryimage) 
-{
-	BinaryImage tmp(binaryimage);
-	swap(tmp);
-} */
 
 BinaryImage BinaryImage::operator*(const BinaryImage &second)
 {
@@ -343,25 +350,7 @@ BinaryImage BinaryImage::operator*(const bool value)
 }
 
  
-ostream& operator<<(ostream& os, const BinaryImage& image)
-{
-	for (int i = 0; i < image.M; i++)
-	{
-		for (int j = 0; j < image.N; j++)
-		{
-			if (image.array[i][j])
-			{
-				os << 1;
-			}
-			else
-			{
-				os << ".";
-			}
-		}
-		os << endl;
-	}
-	return os;
-}
+
 
 bool BinaryImage::operator==(const BinaryImage& second)
 {

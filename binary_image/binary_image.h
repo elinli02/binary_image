@@ -15,12 +15,6 @@ public:
 	int get_M() const;
 	int get_N() const;
 	BinaryImage& operator=(const BinaryImage &binaryimage);
-	/*void swap(BinaryImage& binaryimage) {
-		std::swap(M, binaryimage.M);
-		std::swap(N, binaryimage.N);
-		std::swap(array, binaryimage.array);
-	}
-	void operator=(const BinaryImage& binaryimage); */
 	BinaryImage operator *(const BinaryImage &second);
 	BinaryImage operator +(const BinaryImage &second);
 	BinaryImage operator +(const bool value); 

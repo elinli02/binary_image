@@ -4,6 +4,7 @@ using namespace std;
 BinaryImage createImage();
 int main()
 {
+	 
 	try
 	{
 		setlocale(LC_ALL, "Rus");
