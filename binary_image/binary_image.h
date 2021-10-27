@@ -5,25 +5,25 @@ class BinaryImage
 {
 private:
 	bool** array;
-	int M, N;
+	int rows, cols;
+	void reset();
 public:
 	BinaryImage();
 	BinaryImage(int M, int N);
 	bool& operator()(int i, int j);
 	const bool& operator()(int i, int j) const;
 	BinaryImage(const BinaryImage& copy);
-	int get_M() const;
-	int get_N() const;
-	BinaryImage& operator=(const BinaryImage &binaryimage);
-	BinaryImage operator *(const BinaryImage &second);
-	BinaryImage operator +(const BinaryImage &second);
-	BinaryImage operator +(const bool value); 
-	BinaryImage operator *(const bool value);
-	friend ostream& operator<<(ostream& os, const BinaryImage& image); 
+	int getRows() const;
+	int getCols() const;
+	BinaryImage operator=(const BinaryImage &binaryimage);
+	BinaryImage operator *(const BinaryImage &second) const;
+	BinaryImage operator +(const BinaryImage &second) const;
+	BinaryImage operator +(const bool value) const; 
+	BinaryImage operator *(const bool value) const;
+	//friend ostream& operator<<(ostream& os, const BinaryImage& image); 
 	//void operator !();
-	BinaryImage operator !();
-	double coefficient();
-	bool operator==(const BinaryImage& second); 
+	BinaryImage operator !() const;
+	double coefficient() const;
+	bool operator==(const BinaryImage& second) const; 
 	~BinaryImage();
 };
-

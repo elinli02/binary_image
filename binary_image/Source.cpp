@@ -1,4 +1,5 @@
 #include "binary_image.h"
+#include "functional_interface.h"
 #include<iostream>
 using namespace std;
 BinaryImage createImage();
@@ -14,7 +15,6 @@ int main()
 		int row, col;
 		BinaryImage binaryImage1(createImage()); 
 		BinaryImage binaryImage2(createImage()); 
-
 		do
 		{
 			cout << endl;

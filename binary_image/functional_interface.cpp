@@ -2,11 +2,11 @@
 
 ostream& operator<<(ostream& os, const BinaryImage& image)
 {
-	for (int i = 0; i < image.M; i++)
+	for (int i = 0; i < image.getRows(); i++)
 	{
-		for (int j = 0; j < image.N; j++)
+		for (int j = 0; j < image.getCols(); j++)
 		{
-			if (image.array[i][j])
+			if (image(i, j))
 			{
 				os << 1;
 			}
