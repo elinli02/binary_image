@@ -19,19 +19,19 @@ BinaryImage::BinaryImage()
 	array = NULL;
 } 
 
-BinaryImage::BinaryImage(int M, int N)
+BinaryImage::BinaryImage(int rows, int cols)
 {
-	if(M<=0 || N<=0)
+	if(rows<=0 || cols<=0)
 	{
 		throw"The number of rows and columns should be >0";
 	}
-	this->rows = M;
-	this->cols = N;
-	array = new bool*[M];
-	for (int i = 0; i < M; i++)
+	this->rows = rows;
+	this->cols = cols;
+	array = new bool*[rows];
+	for (int i = 0; i < rows; i++)
 	{
-		array[i] = new bool[N];
-		for (int j = 0; j < N; j++)
+		array[i] = new bool[cols];
+		for (int j = 0; j < cols; j++)
 		{
 			array[i][j] = true;
 		}

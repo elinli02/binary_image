@@ -9,7 +9,7 @@ private:
 	void reset();
 public:
 	BinaryImage();
-	BinaryImage(int M, int N);
+	BinaryImage(int rows, int cols);
 	bool& operator()(int i, int j);
 	const bool& operator()(int i, int j) const;
 	BinaryImage(const BinaryImage& copy);
@@ -21,7 +21,6 @@ public:
 	BinaryImage operator +(const bool value) const; 
 	BinaryImage operator *(const bool value) const;
 	//friend ostream& operator<<(ostream& os, const BinaryImage& image); 
-	//void operator !();
 	BinaryImage operator !() const;
 	double coefficient() const;
 	bool operator==(const BinaryImage& second) const; 
