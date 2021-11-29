@@ -140,11 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binary_image.cpp" />
+    <ClCompile Include="cardinal_direction.cpp" />
     <ClCompile Include="functional_interface.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binary_image.h" />
+    <ClInclude Include="cardinal_direction.h" />
     <ClInclude Include="functional_interface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

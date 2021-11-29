@@ -1,6 +1,7 @@
 #include "binary_image.h"
 
-void BinaryImage::reset()
+template<typename T, T valuePositive, T valueNegative>
+void BinaryImage<T, valuePositive, valueNegative>::reset()
 {
 	for (int i = 0; i < rows; i++)
 	{
@@ -11,15 +12,15 @@ void BinaryImage::reset()
 	cols = 0;
 	array = nullptr;
 }
-
-BinaryImage::BinaryImage()
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative>::BinaryImage()
 {
 	rows = 0;
 	cols = 0;
 	array = NULL;
 } 
-
-BinaryImage::BinaryImage(int rows, int cols)
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative>::BinaryImage(int rows, int cols)
 {
 	if(rows<=0 || cols<=0)
 	{
@@ -27,60 +28,74 @@ BinaryImage::BinaryImage(int rows, int cols)
 	}
 	this->rows = rows;
 	this->cols = cols;
-	array = new bool*[rows];
+	array = new T*[rows];
 	for (int i = 0; i < rows; i++)
 	{
-		array[i] = new bool[cols];
+		array[i] = new T[cols];
 		for (int j = 0; j < cols; j++)
 		{
-			array[i][j] = true;
+			array[i][j] = valuePositive;
 		}
 	}
 }
-const bool& BinaryImage::operator()(int i, int j) const
+
+
+template<typename T, T valuePositive, T valueNegative>
+T& BinaryImage<T, valuePositive, valueNegative >::operator()(int i, int j) 
 {
 	if (i >= rows || j >= cols || i < 0 || j < 0)
 	{
 		throw"Values abroad";
 	}
-	return array[i][j];
+	//if (array[i][j] != valuePositive && array[i][j] != valueNegative && array[i][j]!=true && array[i][j]!=false)
+	if (array[i][j] != valuePositive && array[i][j] != valueNegative)
+	{
+		throw"Incorrect values";
+	}
+	return static_cast<T&>(array[i][j]); //преобразуем к необходимому типу
 }
 
-bool& BinaryImage::operator()(int i, int j)
+template<typename T, T valuePositive, T valueNegative>
+const bool& BinaryImage<T, valuePositive, valueNegative>::operator()(int i, int j) const
 {
 	if (i >= rows || j >= cols || i < 0 || j < 0)
 	{
 		throw"Values abroad";
 	}
-	return array[i][j];
+	if (array[i][j] == valuePositive)
+	{
+		return true;
+	}
+	return false;
+	//return array[i][j];
 } 
-
-BinaryImage::BinaryImage(const BinaryImage& copy)
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative>::BinaryImage(const BinaryImage<T, valuePositive, valueNegative>& copy)
 {
 	rows = copy.rows;
 	cols = copy.cols;
-	array = new bool*[rows];
+	array = new T*[rows];
 	for (int i = 0; i < rows; i++)
 	{
-		array[i] = new bool[cols];
+		array[i] = new T[cols];
 		for (int j = 0; j < cols; j++)
 		{
 			array[i][j] = copy.array[i][j];
 		}
 	}
 }
-
-int BinaryImage::getRows() const
+template<typename T, T valuePositive, T valueNegative>
+int BinaryImage<T, valuePositive, valueNegative>::getRows() const
 {
 	return rows;
 }
-
-int BinaryImage::getCols() const
+template<typename T, T valuePositive, T valueNegative>
+int BinaryImage<T, valuePositive, valueNegative>::getCols() const
 {
 	return cols;
 }
-
-BinaryImage BinaryImage::operator=(const BinaryImage &binaryimage)
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative> BinaryImage<T, valuePositive, valueNegative>::operator=(const BinaryImage<T, valuePositive, valueNegative>&binaryimage)
 {
 	if (this == &binaryimage)
 	{
@@ -89,10 +104,10 @@ BinaryImage BinaryImage::operator=(const BinaryImage &binaryimage)
 	reset();
 	rows = binaryimage.rows;
 	cols = binaryimage.cols;
-	array = new bool* [rows];
+	array = new T* [rows];
 	for (int i = 0; i < rows; i++)
 	{
-		array[i] = new bool[cols];
+		array[i] = new T[cols];
 		for (int j = 0; j < cols; j++)
 		{
 			array[i][j] = binaryimage.array[i][j];
@@ -100,8 +115,8 @@ BinaryImage BinaryImage::operator=(const BinaryImage &binaryimage)
 	}
 	return binaryimage;
 }
-
-BinaryImage BinaryImage::operator*(const BinaryImage &second) const
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative> BinaryImage<T, valuePositive, valueNegative>::operator*(const BinaryImage<T, valuePositive, valueNegative>&second) const
 {
 	int Mresult, Nresult; //max
 	int Mmin, Nmin;
@@ -125,19 +140,19 @@ BinaryImage BinaryImage::operator*(const BinaryImage &second) const
 		Nresult = second.cols;
 		Nmin = this->cols;
 	}
-	BinaryImage result_image(Mresult, Nresult);
-	bool value;
+	BinaryImage<T, valuePositive, valueNegative> result_image(Mresult, Nresult);
+	T value;
 	for (int i = 0; i < Mmin; i++)
 	{
 		for (int j = 0; j < Nmin; j++)
 		{
-			if (array[i][j] && second.array[i][j])
+			if (array[i][j] ==valuePositive && second.array[i][j]==valuePositive)
 			{
-				value = true;
+				value = valuePositive;
 			}
 			else
 			{
-				value = false;
+				value = valueNegative;
 			}
 			result_image(i, j) = value;
 		}
@@ -184,7 +199,8 @@ BinaryImage BinaryImage::operator*(const BinaryImage &second) const
 	}
 	return result_image;
 }
-BinaryImage BinaryImage::operator+(const BinaryImage &second) const
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative > BinaryImage<T, valuePositive, valueNegative>::operator+(const BinaryImage<T, valuePositive, valueNegative>&second) const
 {
 	int Nmax, Mmax;
 	int Nmin, Mmin;
@@ -208,19 +224,19 @@ BinaryImage BinaryImage::operator+(const BinaryImage &second) const
 		Nmax = second.cols;
 		Nmin = this->cols;
 	}
-	BinaryImage result_image(Mmax, Nmax);
-	bool value;
+	BinaryImage<T, valuePositive, valueNegative> result_image(Mmax, Nmax);
+	T value;
 	for(int i=0; i<Mmin; i++)
 	{
 		for(int j=0; j<Nmin; j++)
 		{
-			if(array[i][j]==false && second.array[i][j]==false)
+			if(array[i][j]==valueNegative && second.array[i][j]==valueNegative)
 			{
-				value = false;
+				value = valueNegative;
 			}
 			else
 			{
-				value = true;
+				value = valuePositive;
 			}
 			result_image(i, j)= value;
 		}
@@ -268,28 +284,37 @@ BinaryImage BinaryImage::operator+(const BinaryImage &second) const
 	return result_image;
 }
 
-
-BinaryImage BinaryImage::operator!() const
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative> BinaryImage<T, valuePositive, valueNegative>::operator!() const
 {
-	BinaryImage temp(rows, cols);
+	BinaryImage<T, valuePositive, valueNegative> temp(rows, cols);
 	for (int i = 0; i < temp.rows; i++)
 	{
 		for (int j = 0; j < temp.cols; j++)
 		{
-			temp.array[i][j] = !temp.array[i][j];
+
+			if (temp.array[i][j] == valuePositive)
+			{
+				temp.array[i][j] = valueNegative;
+			}
+			else
+			{
+				temp.array[i][j] = valuePositive;
+			}
+
 		}
 	}
 	return temp;
 }
-
-double BinaryImage::coefficient() const
+template<typename T, T valuePositive, T valueNegative>
+double BinaryImage<T, valuePositive, valueNegative>::coefficient() const
 {
 	int countElementsTrue=0;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			if (this->array[i][j])
+			if (this->array[i][j]==valuePositive)
 			{
 				countElementsTrue++;
 			}
@@ -299,22 +324,22 @@ double BinaryImage::coefficient() const
 	return (double)countElementsTrue/countElements;
 }
 
-
-BinaryImage::~BinaryImage()
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative>::~BinaryImage()
 {
 	reset();
 }
-
-BinaryImage BinaryImage::operator+(const bool value) const
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative> BinaryImage<T, valuePositive, valueNegative>::operator+(const T value) const
 {
-	BinaryImage resultImage(rows, cols);
-	if (value) //вся матрица будет true
+	BinaryImage<T, valuePositive, valueNegative> resultImage(rows, cols);
+	if (value==valuePositive) //вся матрица будет true
 	{
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < cols; j++)
 			{
-				resultImage.array[i][j] = true;
+				resultImage.array[i][j] = valuePositive;
 			}
 		}
 	}
@@ -332,17 +357,17 @@ BinaryImage BinaryImage::operator+(const bool value) const
 }
 
 
-
-BinaryImage BinaryImage::operator*(const bool value) const
+template<typename T, T valuePositive, T valueNegative>
+BinaryImage<T, valuePositive, valueNegative> BinaryImage<T, valuePositive, valueNegative>::operator*(const T value) const
 {
-	BinaryImage resultImage(rows, cols);
-	if (!value)
+	BinaryImage<T, valuePositive, valueNegative> resultImage(rows, cols);
+	if (value==valueNegative)
 	{
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < cols; j++)
 			{
-				resultImage.array[i][j] = false;
+				resultImage.array[i][j] = valueNegative; 
 			}
 		}
 	}
@@ -359,10 +384,8 @@ BinaryImage BinaryImage::operator*(const bool value) const
 	return resultImage;
 }
 
- 
-
-
-bool BinaryImage::operator==(const BinaryImage& second) const
+template<typename T, T valuePositive, T valueNegative>
+bool BinaryImage<T, valuePositive, valueNegative>::operator==(const BinaryImage<T, valuePositive, valueNegative>& second) const
 {
 	if (rows != second.rows || cols != second.cols)
 	{
@@ -381,3 +404,24 @@ bool BinaryImage::operator==(const BinaryImage& second) const
 	return true;
 }
 
+/*template<typename T, T valuePositive, T valueNegative>
+ostream& operator<<(ostream& os, const BinaryImage<T, valuePositive, valueNegative>& image)
+{
+	for (int i = 0; i < image.getRows(); i++)
+	{
+		for (int j = 0; j < image.getCols(); j++)
+		{
+			//if (image(i, j) == valuePositive)
+			if (image.array[i][j] == valuePositive)
+			{
+				os << 1;
+			}
+			else
+			{
+				os << ".";
+			}
+		}
+		os << endl;
+	}
+	return os;
+}  */
